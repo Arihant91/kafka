@@ -1,0 +1,11 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:29092
+
+  data:
+    cassandra:
+      name: localhost
+      port: 9042
+      keyspace-name: Orders
+      username: cassandra
+      password: cassandra

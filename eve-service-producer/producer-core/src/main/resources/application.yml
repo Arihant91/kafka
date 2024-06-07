@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: eve-price-producer
+
+eve:
+  base-url: https://esi.evetech.net/
+  version: latest
+  datasource: ?datasource=tranquility
+  urls:
+    prices: /markets/prices/
+    marketOrdersByRegion: /markets/{regionId}/orders/
+    getRegions: /universe/regions/
