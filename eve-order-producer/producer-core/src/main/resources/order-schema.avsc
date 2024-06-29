@@ -1,0 +1,59 @@
+{
+    "type": "record",
+    "name": "Order",
+    "namespace": "com.topic.schema",
+    "fields": [
+    {
+        "name": "id",
+        "type": "int"
+    },
+    {
+        "name": "duration",
+        "type": "int"
+    },
+    {
+        "name": "isBuyOrder",
+        "type": "boolean"
+    },
+    {
+        "name": "issued",
+        "type": "date"
+    },
+    {
+        "name": "locationId",
+        "type": "int"
+    },
+    {
+        "name": "minVolume",
+        "type": "int"
+    },
+    {
+        "name": "orderId",
+        "type": "int"
+    },
+    {
+        "name": "price",
+        "type": "int"
+    },
+    {
+        "name": "range",
+        "type": "string"
+    },
+    {
+        "name": "systemId",
+        "type": "string"
+    },
+    {
+        "name": "typeId",
+        "type": "int"
+    },
+    {
+        "name": "volumeRemain",
+        "type": "int"
+    },
+    {
+        "name": "volumeTotal",
+        "type": "int"
+    },
+    ]
+}
