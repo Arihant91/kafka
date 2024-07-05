@@ -28,22 +28,22 @@ public class IntegrationFlowConfig {
     @Autowired
     private SendProcessedOrdersToKafkaSubscriber sendProcessedOrdersToKafkaSubscriber;
 
-    @Bean(name = "taskExecutor")
-    public ThreadPoolTaskExecutor taskExecutor(){
+    @Bean(name = "processOrdersTaskExecutor")
+    public ThreadPoolTaskExecutor processOrdersTaskExecutor(){
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setCorePoolSize(20);
-        taskExecutor.setMaxPoolSize(40);
-        taskExecutor.setQueueCapacity(40);
+        taskExecutor.setCorePoolSize(1000);
+        taskExecutor.setMaxPoolSize(1200);
+        taskExecutor.setQueueCapacity(1200);
         taskExecutor.setThreadNamePrefix("processOrdersChannel-");
         taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         taskExecutor.initialize();
         return taskExecutor;
     }
-
-    public ThreadPoolTaskExecutor taskExecutorGetOrders(){
+    @Bean(name = "getOrdersTaskExecutor")
+    public ThreadPoolTaskExecutor getOrdersTaskExecutor(){
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setCorePoolSize(20);
-        taskExecutor.setMaxPoolSize(40);
+        taskExecutor.setCorePoolSize(10);
+        taskExecutor.setMaxPoolSize(20);
         taskExecutor.setQueueCapacity(40);
         taskExecutor.setThreadNamePrefix("getOrdersChannel-");
         taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
@@ -55,7 +55,7 @@ public class IntegrationFlowConfig {
     public IntegrationFlow handleProcessOrders(){
         return IntegrationFlow
                 .from("processOrdersChannel")
-                .channel(MessageChannels.executor(taskExecutor()))
+                .channel(MessageChannels.executor(processOrdersTaskExecutor()))
                 .handle(processOrdersSubscriber, "processOrders")
                 .get();
     }
@@ -63,7 +63,7 @@ public class IntegrationFlowConfig {
     @Bean
     public IntegrationFlow handleGetOrders() {
         return IntegrationFlow.from("getOrdersChannel")
-                .channel(MessageChannels.executor(taskExecutorGetOrders()))
+                .channel(MessageChannels.executor(getOrdersTaskExecutor()))
                 .handle(getOrdersSubscriber, "processOrders")
                 .get();
     }

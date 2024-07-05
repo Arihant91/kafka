@@ -30,25 +30,9 @@ public class ProcessOrdersSubscriber {
     private EveService eveService;
 
 
-    @Autowired
-    private RateLimiterService rateLimiterService;
-
     public void processOrders(Message<Ids> idsMessage) {
         Ids ids = idsMessage.getPayload();
-        int page = 1;
-        ResponseEntity<List<Order>> response = fetchOrders(ids.regionId(), ids.typeId(), page);
-        List<Order> orderList = new ArrayList<>(Objects.requireNonNull(response.getBody()));
-        HttpHeaders headers = response.getHeaders();
-        rateLimiterService.checkRateLimit(headers);
-        int pages = extractTotalPages(headers);
-        while (page < pages) {
-            page += 1;
-            ResponseEntity<List<Order>> pageResponse = eveService.getRegionOrdersByPage(ids.regionId(), ids.typeId(), page);
-            rateLimiterService.checkRateLimit(pageResponse.getHeaders());
-            orderList.addAll(Objects.requireNonNull(pageResponse.getBody()));
-        }
-        orderList.forEach(order -> order.setRegionId(ids.regionId()));
-        sendMessage(orderList);
+        sendMessage(eveService.getAllOrdersInRegionByType(ids.regionId(),ids.typeId()));
     }
 
     private int extractTotalPages(HttpHeaders headers) {

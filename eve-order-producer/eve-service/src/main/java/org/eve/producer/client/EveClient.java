@@ -23,6 +23,6 @@ public interface EveClient {
     List<Long> getRegions();
 
     @GetMapping("${eve.version}" + "${eve.urls.getTypes}" + "${eve.datasource}")
-    List<Long> getTypes();
+    ResponseEntity<List<Long>> getTypes(@RequestHeader("page") Integer page);
 
 }
