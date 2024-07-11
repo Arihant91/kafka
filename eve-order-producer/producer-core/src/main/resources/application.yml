@@ -11,3 +11,8 @@ eve:
     marketOrdersByRegion: /markets/{regionId}/orders/
     getRegions: /universe/regions/
     getTypes: /universe/types/
+
+mongodb:
+  url: mongodb://localhost:27017
+  db: EveMarket
+  collection: MarketStructure

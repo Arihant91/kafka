@@ -10,10 +10,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableFeignClients
 @EnableScheduling
 @SpringBootApplication
-public class CoreServiceApplication {
+public class ProducerCoreApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CoreServiceApplication.class, args);
+        SpringApplication.run(ProducerCoreApplication.class, args);
     }
 
 }

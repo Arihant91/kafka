@@ -17,6 +17,5 @@ public class SendProcessedOrdersToKafkaSubscriber {
 
     public void processOrders(OrdersMean ordersMean){
         kafkaService.sendMessage("ordersMean",  null, ordersMean);
-        logger.info("sent from SendProcessedOrdersToKafkaSubscriber");
     }
 }

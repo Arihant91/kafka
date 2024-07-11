@@ -3,14 +3,14 @@ package org.eve.producer.service;
 
 import org.eve.producer.client.EveClient;
 import org.eve.producer.domain.Order;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -21,6 +21,7 @@ import java.util.stream.IntStream;
 @Service
 public class EveService {
 
+    private static final Logger fileLogger = LoggerFactory.getLogger("FILE_LOGGER");
     private final EveClient eveClient;
 
     private final RateLimiterService rateLimiterService;
@@ -47,11 +48,9 @@ public class EveService {
         List<Long> typeIds = new ArrayList<>(getBodyOrEmpty(typeIdsResp));
         rateLimiterService.checkRateLimit(typeIdsResp.getHeaders());
         int totalPages = extractTotalPages(typeIdsResp.getHeaders());
-
         for (currentPage = 2; currentPage <= totalPages; currentPage++) {
             rateLimiterService.checkRateLimit(typeIdsResp.getHeaders());
-            typeIdsResp = eveClient.getTypes(currentPage);
-            typeIds.addAll(getBodyOrEmpty(typeIdsResp));
+            typeIds.addAll(getBodyOrEmpty(eveClient.getTypes(currentPage)));
         }
         return typeIds;
     }
@@ -62,11 +61,14 @@ public class EveService {
 
     public List<Order> getAllOrdersInRegionByType(Long regionId, Long typeId) {
         int currentPage = 1;
+
         ResponseEntity<List<Order>> ordersResp = eveClient.getMarketOrdersByRegion(regionId, typeId, currentPage);
         List<Order> orders = new ArrayList<>(Objects.requireNonNull(ordersResp.getBody()));
         rateLimiterService.checkRateLimit(ordersResp.getHeaders());
         int totalPages = extractTotalPages(ordersResp.getHeaders());
-
+        if(orders.isEmpty()){
+            fileLogger.info("regionId: {}, typeId: {}, ordersResp: {}", regionId, typeId, ordersResp);
+        }
         List<CompletableFuture<List<Order>>> futures = IntStream.rangeClosed(2, totalPages)
                 .mapToObj(page -> CompletableFuture.supplyAsync(() -> {
                     rateLimiterService.checkRateLimit(ordersResp.getHeaders());
@@ -83,7 +85,7 @@ public class EveService {
                 Thread.currentThread().interrupt();
             }
         }
-        orders.forEach(order -> order.setOrderId(regionId));
+        orders.forEach(order -> order.setRegionId(regionId));
         return orders;
     }
 

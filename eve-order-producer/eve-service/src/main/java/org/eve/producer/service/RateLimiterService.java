@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Objects;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -16,6 +17,8 @@ public class RateLimiterService {
     private static final int ERROR_LIMIT_THRESHOLD = 20;
     private long errorLimitResetTime;
     private boolean rateLimitExceeded = false;
+
+    private int lastRateLimit = 0;
     private final ReentrantLock lock = new ReentrantLock();
     private final Condition rateLimitCondition = lock.newCondition();
 
@@ -27,15 +30,20 @@ public class RateLimiterService {
                 errorLimitResetTime = Long.parseLong(Objects.requireNonNull(headers.get("X-ESI-Error-Limit-Reset")).get(0));
                 rateLimitExceeded = true;
                 try {
+                    Instant rateLimited = Instant.ofEpochMilli(errorLimitResetTime * 1000 + 5000);
                     logger.info("Rate limit reached. Pausing requests.");
                     logger.info("Remaining rate limit: {}", remainingErrorLimit);
-                    Thread.sleep(errorLimitResetTime * 1000 + 5000);
+                    logger.info("Request paused till: {}", rateLimited);
+                    if( remainingErrorLimit != lastRateLimit){
+                        lastRateLimit = remainingErrorLimit;
+                        Thread.sleep(errorLimitResetTime * 1000 + 5000);
+                    }
                 } catch (InterruptedException e) {
                     logger.error("Thread interrupted while sleeping for rate limit reset", e);
                     Thread.currentThread().interrupt();
                 } finally {
                     rateLimitExceeded = false;
-                    rateLimitCondition.signalAll(); // Notify all waiting threads that they can proceed
+                    rateLimitCondition.signalAll();
                 }
             } else {
                 while (rateLimitExceeded) {

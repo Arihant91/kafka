@@ -35,21 +35,8 @@ public class ProcessOrdersSubscriber {
         sendMessage(eveService.getAllOrdersInRegionByType(ids.regionId(),ids.typeId()));
     }
 
-    private int extractTotalPages(HttpHeaders headers) {
-        String xPages = headers.getFirst("X-Pages");
-        if (xPages != null && !xPages.isEmpty()) {
-            return Integer.parseInt(xPages);
-        }
-        return 1;
-    }
-
-    private ResponseEntity<List<Order>> fetchOrders(Long regionId, Long typeId, int page) {
-        return eveService.getRegionOrdersByPage(regionId, typeId, page);
-    }
-
     private void sendMessage(List<Order> orders) {
         getOrdersChannel.send(MessageBuilder.withPayload(orders).build());
-        logger.info("Order sent from ProcessOrdersSubscriber");
     }
 
 }

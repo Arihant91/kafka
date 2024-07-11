@@ -20,6 +20,10 @@
             <artifactId>kafka-service</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.eve.producer</groupId>
+            <artifactId>mongo-service</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-stream</artifactId>
         </dependency>

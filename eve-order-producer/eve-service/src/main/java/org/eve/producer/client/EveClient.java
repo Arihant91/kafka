@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.util.List;
@@ -16,13 +17,13 @@ public interface EveClient {
     @GetMapping("${eve.version}" + "${eve.urls.prices}" + "${eve.datasource}")
     String getPrices();
 
-    @GetMapping("${eve.version}" + "${eve.urls.marketOrdersByRegion}" + "${eve.datasource}&type_id={typeId}")
-    ResponseEntity<List<Order>> getMarketOrdersByRegion(@PathVariable("regionId") Long regionId,@PathVariable ("typeId") Long typeId, @RequestHeader("page") Integer page);
+    @GetMapping("${eve.version}" + "${eve.urls.marketOrdersByRegion}" + "${eve.datasource}")
+    ResponseEntity<List<Order>> getMarketOrdersByRegion(@PathVariable("regionId") Long regionId,@RequestParam ("typeId") Long typeId, @RequestParam("page") Integer page);
 
     @GetMapping("${eve.version}" + "${eve.urls.getRegions}" + "${eve.datasource}")
     List<Long> getRegions();
 
     @GetMapping("${eve.version}" + "${eve.urls.getTypes}" + "${eve.datasource}")
-    ResponseEntity<List<Long>> getTypes(@RequestHeader("page") Integer page);
+    ResponseEntity<List<Long>> getTypes(@RequestParam("page") Integer page);
 
 }

@@ -20,6 +20,5 @@ public class SendToKafkaSubscriber {
 
     public void processOrders(Order order){
             kafkaService.sendMessage("orders",  null, order);
-            logger.info("sent from SendToKafkaSubscriber");
     }
 }

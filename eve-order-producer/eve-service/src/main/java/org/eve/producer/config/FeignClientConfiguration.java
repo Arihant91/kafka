@@ -1,6 +1,7 @@
 package org.eve.producer.config;
 
 import feign.Retryer;
+import feign.codec.ErrorDecoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,4 +12,5 @@ public class FeignClientConfiguration {
     public Retryer feignRetryer() {
         return new Retryer.Default(1000, 2000, 10);
     }
+
 }
