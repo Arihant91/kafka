@@ -43,7 +43,7 @@ public class IntegrationFlowConfig {
     public ThreadPoolTaskExecutor getOrdersTaskExecutor(){
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         taskExecutor.setCorePoolSize(10);
-        taskExecutor.setMaxPoolSize(20);
+        taskExecutor.setMaxPoolSize(40);
         taskExecutor.setQueueCapacity(40);
         taskExecutor.setThreadNamePrefix("getOrdersChannel-");
         taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());

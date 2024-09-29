@@ -11,6 +11,7 @@ eve:
     marketOrdersByRegion: /markets/{regionId}/orders/
     getRegions: /universe/regions/
     getTypes: /universe/types/
+    getRelevantTypes: /markets/{regionId}/types/
 
 mongodb:
   url: mongodb://localhost:27017

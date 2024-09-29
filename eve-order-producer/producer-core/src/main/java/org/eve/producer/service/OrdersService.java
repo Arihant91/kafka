@@ -22,40 +22,29 @@ public class OrdersService {
 
     private static final Logger fileLogger = LoggerFactory.getLogger("FILE_LOGGER");
     private final EveService eveService;
-
-    private final MongoService mongoService;
     private final MessageChannel processOrdersChannel;
 
-    private List<Long> regionsIds = new ArrayList<>();
-    private List<Long> typeIds = new ArrayList<>();
-
     @Autowired
-    public OrdersService(EveService eveService,MongoService mongoService, MessageChannel processOrdersChannel) {
+    public OrdersService(EveService eveService, MessageChannel processOrdersChannel) {
         this.eveService = eveService;
-        this.mongoService = mongoService;
         this.processOrdersChannel = processOrdersChannel;
     }
 
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 33 * * * *")
     public void getOrders() {
         Instant startTime = Instant.now();
         AtomicInteger counter = new AtomicInteger();
-        if (regionsIds.isEmpty()) {
-            regionsIds = eveService.getRegionIds();
-        }
-        if (typeIds.isEmpty()) {
-            typeIds = eveService.getAllTypeIds();
-        }
-        mongoService.getMarketItemIds(List.of("Ship Equipment"));
-//        regionsIds.parallelStream().forEach(regionId ->
-//                typeIds.parallelStream().forEach(typeId -> {
-//                            counter.getAndIncrement();
-//                            logger.info("counter: " + counter);
-//                            sendMessage(regionId, typeId);
-//                        }
-//                )
-//        );
-        fileLogger.info("Number of regionIds: {} \n Number of typeIds: {} \n number of calls: {}", regionsIds.size(), typeIds.size(), counter.get());
+        List<Long> regionIds = eveService.getRegionIds();
+        int idx = 1;
+        regionIds.forEach(regionId ->{
+                logger.info("doing {} regionid, idx {}", regionId, idx);
+                eveService.getRelevantTypesByRegion(regionId).forEach(typeId -> {
+                        sendMessage(regionId, typeId);
+                        counter.getAndIncrement();
+                        logger.info("counter: " + counter);
+                        });
+        });
+
         logger.info("Process took in minutes: {}", Duration.between(Instant.now(), startTime).toMinutes());
     }
 

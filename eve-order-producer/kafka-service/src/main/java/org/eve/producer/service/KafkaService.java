@@ -30,7 +30,7 @@ public class KafkaService {
             if (exception != null) {
                 System.err.println("Error sending record: " + exception.getMessage());
             } else {
-                System.out.println("Record sent to partition " + metadata.toString() + " with offset " + metadata.toString());
+                //System.out.println("Record sent to partition " + metadata.toString() + " with offset " + metadata.toString());
             }
     });
     }
@@ -42,7 +42,7 @@ public class KafkaService {
             if (exception != null) {
                 System.err.println("Error sending record: " + exception.getMessage());
             } else {
-                System.out.println("Record sent to partition " + metadata.toString() + " with offset " + metadata.  toString());
+               // System.out.println("Record sent to partition " + metadata.toString() + " with offset " + metadata.  toString());
             }
         });
     }

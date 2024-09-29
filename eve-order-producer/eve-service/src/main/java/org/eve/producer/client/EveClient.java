@@ -26,4 +26,7 @@ public interface EveClient {
     @GetMapping("${eve.version}" + "${eve.urls.getTypes}" + "${eve.datasource}")
     ResponseEntity<List<Long>> getTypes(@RequestParam("page") Integer page);
 
+    @GetMapping("${eve.version}" + "${eve.urls.getRelevantTypes}" + "${eve.datasource}")
+    ResponseEntity<List<Long>> getRelevantTypesByRegion(@PathVariable("regionId") Long regionId, @RequestParam("page") Integer page);
+
 }

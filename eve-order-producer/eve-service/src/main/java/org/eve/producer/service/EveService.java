@@ -55,6 +55,19 @@ public class EveService {
         return typeIds;
     }
 
+    public List<Long> getRelevantTypesByRegion(Long regionId){
+        int currentPage = 1;
+        ResponseEntity<List<Long>> typeIdsResp = eveClient.getRelevantTypesByRegion(regionId, currentPage);
+        List<Long> typeIds = getBodyOrEmpty(typeIdsResp);
+        rateLimiterService.checkRateLimit(typeIdsResp.getHeaders());
+        int totalPages = extractTotalPages(typeIdsResp.getHeaders());
+        for (currentPage = 2; currentPage <= totalPages; currentPage++) {
+            rateLimiterService.checkRateLimit(typeIdsResp.getHeaders());
+            typeIds.addAll(getBodyOrEmpty(eveClient.getRelevantTypesByRegion(regionId, currentPage)));
+        }
+        return typeIds;
+    }
+
     public ResponseEntity<List<Order>> getRegionOrdersByPage(Long regionId, Long typeId, Integer page) {
         return eveClient.getMarketOrdersByRegion(regionId, typeId, page);
     }
@@ -82,7 +95,6 @@ public class EveService {
                 orders.addAll(future.get());
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
-                Thread.currentThread().interrupt();
             }
         }
         orders.forEach(order -> order.setRegionId(regionId));

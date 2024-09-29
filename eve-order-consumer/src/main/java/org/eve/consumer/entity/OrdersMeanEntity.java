@@ -1,6 +1,7 @@
 package org.eve.consumer.entity;
 
 import lombok.Builder;
+import lombok.ToString;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 
 @Builder
 @Table("orders_mean")
+@ToString
 public class OrdersMeanEntity {
 
     @PrimaryKeyColumn(name = "region_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)

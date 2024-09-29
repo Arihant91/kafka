@@ -7,6 +7,8 @@ import org.eve.consumer.entity.OrderEntity;
 import org.eve.consumer.entity.OrdersMeanEntity;
 import org.eve.consumer.repository.OrdersMeanRepository;
 import org.eve.consumer.repository.OrdersRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
@@ -17,6 +19,8 @@ public class KafkaConsumerService {
     private final OrdersRepository ordersRepository;
 
     private final OrdersMeanRepository ordersMeanRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(KafkaConsumerService.class);
     @Autowired
     public KafkaConsumerService(OrdersRepository ordersRepository, OrdersMeanRepository ordersMeanRepository){
         this.ordersMeanRepository = ordersMeanRepository;
@@ -45,7 +49,7 @@ public class KafkaConsumerService {
             ordersRepository.save(orderEntity);
             ack.acknowledge();
         } catch (Exception e) {
-            System.err.println("Failed to deserialize message: " + e.getMessage());
+            logger.info("Failed to deserialize message: {}", e.getMessage());
         }
 
     }
@@ -67,12 +71,11 @@ public class KafkaConsumerService {
                     .orderCount(ordersMean.getOrderCount())
                     .build();
             ordersMeanRepository.save(ordersMeanEntity);
-            System.out.println("ordersMeanEntity entity saved: " +ordersMeanEntity);
+            logger.info("ordersMeanEntity entity saved: {}", ordersMeanEntity);
             ack.acknowledge();
         } catch (Exception e) {
-            System.err.println("Failed to deserialize message: " + e.getMessage());
+            logger.info("Failed to deserialize message: {}", e.getMessage());
         }
-
     }
 
 }
