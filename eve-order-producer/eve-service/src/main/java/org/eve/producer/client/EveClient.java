@@ -18,7 +18,7 @@ public interface EveClient {
     String getPrices();
 
     @GetMapping("${eve.version}" + "${eve.urls.marketOrdersByRegion}" + "${eve.datasource}")
-    ResponseEntity<List<Order>> getMarketOrdersByRegion(@PathVariable("regionId") Long regionId,@RequestParam ("typeId") Long typeId, @RequestParam("page") Integer page);
+    ResponseEntity<List<Order>> getMarketOrdersByRegion(@PathVariable("regionId") Long regionId,@RequestParam("type_id") Long typeId, @RequestParam("page") Integer page);
 
     @GetMapping("${eve.version}" + "${eve.urls.getRegions}" + "${eve.datasource}")
     List<Long> getRegions();

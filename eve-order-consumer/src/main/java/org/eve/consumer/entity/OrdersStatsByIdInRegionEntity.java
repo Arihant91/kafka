@@ -11,15 +11,12 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Builder
-@Table("orders_mean")
+@Table("orders_stats_by_region")
 @ToString
-public class OrdersMeanEntity {
+public class OrdersStatsByIdInRegionEntity {
 
     @PrimaryKeyColumn(name = "region_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     private Long regionId;
-
-    @PrimaryKeyColumn(name = "location_id", ordinal = 2, type = PrimaryKeyType.CLUSTERED)
-    private Long locationId;
 
     @Column("type_id")
     private Long typeId;
@@ -32,6 +29,9 @@ public class OrdersMeanEntity {
 
     @Column("avg_price")
     private BigDecimal avgPrice;
+
+    @Column("median_price")
+    private BigDecimal medianPrice;
 
     @Column("volume_remain")
     private Long volumeRemain;

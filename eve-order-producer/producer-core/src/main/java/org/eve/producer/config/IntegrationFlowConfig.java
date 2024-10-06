@@ -31,9 +31,9 @@ public class IntegrationFlowConfig {
     @Bean(name = "processOrdersTaskExecutor")
     public ThreadPoolTaskExecutor processOrdersTaskExecutor(){
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setCorePoolSize(100);
-        taskExecutor.setMaxPoolSize(200);
-        taskExecutor.setQueueCapacity(200);
+        taskExecutor.setCorePoolSize(500);
+        taskExecutor.setMaxPoolSize(600);
+        taskExecutor.setQueueCapacity(600);
         taskExecutor.setThreadNamePrefix("processOrdersChannel-");
         taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         taskExecutor.initialize();

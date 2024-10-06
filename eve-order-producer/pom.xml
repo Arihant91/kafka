@@ -18,7 +18,6 @@
         <module>eve-service</module>
         <module>producer-core</module>
         <module>kafka-service</module>
-        <module>mongo-service</module>
     </modules>
 
     <properties>

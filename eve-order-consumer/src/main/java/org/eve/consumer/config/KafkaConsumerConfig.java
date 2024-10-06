@@ -3,7 +3,7 @@ package org.eve.consumer.config;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.eve.consumer.domain.Order;
-import org.eve.consumer.domain.OrdersMean;
+import org.eve.consumer.domain.OrdersStatsByIdInRegion;
 import org.eve.consumer.serializer.OrderDeserializer;
 import org.eve.consumer.serializer.OrderMeanDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +30,11 @@ public class KafkaConsumerConfig {
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, OrderDeserializer.class);
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+        props.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, "5000");
+        props.put(ConsumerConfig.FETCH_MAX_BYTES_CONFIG, "1048586");
+        props.put(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, "1024000");
+        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "500");
         return props;
     }
 
@@ -51,13 +55,13 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, OrdersMean> consumerFactoryOrderMean() {
+    public ConsumerFactory<String, OrdersStatsByIdInRegion> consumerFactoryOrderMean() {
         return new DefaultKafkaConsumerFactory<>(consumerConfigsOrderMean());
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, OrdersMean> kafkaListenerContainerFactoryOrderMean() {
-        ConcurrentKafkaListenerContainerFactory<String, OrdersMean> factory =
+    public ConcurrentKafkaListenerContainerFactory<String, OrdersStatsByIdInRegion> kafkaListenerContainerFactoryOrderMean() {
+        ConcurrentKafkaListenerContainerFactory<String, OrdersStatsByIdInRegion> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactoryOrderMean());
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);

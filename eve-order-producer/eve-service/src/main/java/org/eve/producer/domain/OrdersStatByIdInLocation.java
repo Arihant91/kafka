@@ -1,18 +1,9 @@
-package org.eve.consumer.domain;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+package org.eve.producer.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class OrdersMean {
+public class OrdersStatByIdInLocation {
     private Long regionId;
     private Long locationId;
     private Long typeId;
@@ -23,4 +14,5 @@ public class OrdersMean {
     private BigDecimal highestPrice;
     private BigDecimal lowestPrice;
     private Integer orderCount;
+    private BigDecimal medianPrice;
 }

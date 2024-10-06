@@ -10,13 +10,13 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar" />
         </processorPath>
-        <module name="eve-service" />
         <module name="eve-order-consumer" />
-        <module name="mongo-service" />
+        <module name="eve-service" />
         <module name="producer-core" />
         <module name="kafka-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="21" />
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -24,7 +24,6 @@
       <module name="eve-order-producer" options="-parameters -Xlint:unchecked" />
       <module name="eve-service" options="-parameters -Xlint:unchecked" />
       <module name="kafka-service" options="-parameters -Xlint:unchecked" />
-      <module name="mongo-service" options="-parameters -Xlint:unchecked" />
       <module name="producer-core" options="-parameters -Xlint:unchecked" />
     </option>
   </component>

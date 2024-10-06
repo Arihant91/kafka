@@ -1,11 +1,11 @@
 package org.eve.consumer.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eve.consumer.domain.Order;
-import org.eve.consumer.domain.OrdersMean;
+import org.eve.consumer.domain.OrdersStatsByIdInRegion;
 import org.eve.consumer.entity.OrderEntity;
-import org.eve.consumer.entity.OrdersMeanEntity;
-import org.eve.consumer.repository.OrdersMeanRepository;
+
+import org.eve.consumer.entity.OrdersStatsByIdInRegionEntity;
+import org.eve.consumer.repository.OrdersStatsByIdInRegionEntityRepository;
 import org.eve.consumer.repository.OrdersRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,12 +18,12 @@ import org.springframework.stereotype.Service;
 public class KafkaConsumerService {
     private final OrdersRepository ordersRepository;
 
-    private final OrdersMeanRepository ordersMeanRepository;
+    private final OrdersStatsByIdInRegionEntityRepository ordersStatsByIdInRegionEntityRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(KafkaConsumerService.class);
     @Autowired
-    public KafkaConsumerService(OrdersRepository ordersRepository, OrdersMeanRepository ordersMeanRepository){
-        this.ordersMeanRepository = ordersMeanRepository;
+    public KafkaConsumerService(OrdersRepository ordersRepository, OrdersStatsByIdInRegionEntityRepository ordersStatsByIdInRegionEntityRepository){
+        this.ordersStatsByIdInRegionEntityRepository = ordersStatsByIdInRegionEntityRepository;
         this.ordersRepository = ordersRepository;
     }
 
@@ -55,23 +55,23 @@ public class KafkaConsumerService {
     }
 
     @KafkaListener(topics = "ordersMean", groupId = "ordersMean", containerFactory = "kafkaListenerContainerFactoryOrderMean")
-    public void listen(OrdersMean ordersMean, Acknowledgment ack){
+    public void listen(OrdersStatsByIdInRegion ordersMean, Acknowledgment ack){
         try{
-            OrdersMeanEntity ordersMeanEntity = OrdersMeanEntity
+            OrdersStatsByIdInRegionEntity ordersStatsByIdInRegionEntity = OrdersStatsByIdInRegionEntity
                     .builder()
                     .regionId(ordersMean.getRegionId())
-                    .locationId(ordersMean.getLocationId())
                     .typeId(ordersMean.getTypeId())
                     .isBuyOrders(ordersMean.getIsBuyOrders())
                     .timeOfScraping(ordersMean.getTimeOfScraping())
                     .volumeRemain(ordersMean.getVolumeRemain())
                     .avgPrice(ordersMean.getAvgPrice())
+                    .medianPrice(ordersMean.getMedianPrice())
                     .highestPrice(ordersMean.getHighestPrice())
                     .lowestPrice(ordersMean.getLowestPrice())
                     .orderCount(ordersMean.getOrderCount())
                     .build();
-            ordersMeanRepository.save(ordersMeanEntity);
-            logger.info("ordersMeanEntity entity saved: {}", ordersMeanEntity);
+            ordersStatsByIdInRegionEntityRepository.save(ordersStatsByIdInRegionEntity);
+            logger.info("ordersMeanEntity entity saved: {}", ordersStatsByIdInRegionEntity);
             ack.acknowledge();
         } catch (Exception e) {
             logger.info("Failed to deserialize message: {}", e.getMessage());

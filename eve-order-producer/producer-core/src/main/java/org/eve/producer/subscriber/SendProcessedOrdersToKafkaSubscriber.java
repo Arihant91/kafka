@@ -1,7 +1,6 @@
 package org.eve.producer.subscriber;
 
-import org.eve.producer.domain.Order;
-import org.eve.producer.domain.OrdersMean;
+import org.eve.producer.domain.OrdersStatsByIdInRegion;
 import org.eve.producer.service.KafkaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,7 @@ public class SendProcessedOrdersToKafkaSubscriber {
     @Autowired
     private KafkaService kafkaService;
 
-    public void processOrders(OrdersMean ordersMean){
-        kafkaService.sendMessage("ordersMean",  null, ordersMean);
+    public void processOrders(OrdersStatsByIdInRegion ordersMeanByRegion){
+        kafkaService.sendMessage("ordersMean",  null, ordersMeanByRegion);
     }
 }

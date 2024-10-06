@@ -1,10 +1,9 @@
 package org.eve.producer.config;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.eve.producer.domain.Order;
-import org.eve.producer.domain.OrdersMean;
+import org.eve.producer.domain.OrdersStatsByIdInRegion;
 import org.eve.producer.serializer.OrderMeanSerializer;
 import org.eve.producer.serializer.OrderSerializer;
 import org.springframework.context.annotation.Bean;
@@ -37,7 +36,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<String, OrdersMean> producerFactoryOrdersMean() {
+    public ProducerFactory<String, OrdersStatsByIdInRegion> producerFactoryOrdersMean() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092,localhost:29092,localhost:39092");
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -49,7 +48,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, OrdersMean> kafkaTemplateOrdersMean() {
+    public KafkaTemplate<String, OrdersStatsByIdInRegion> kafkaTemplateOrdersMean() {
         return new KafkaTemplate<>(producerFactoryOrdersMean());
     }
 }

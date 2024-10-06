@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
-import org.eve.producer.domain.OrdersMean;
+import org.eve.producer.domain.OrdersStatsByIdInRegion;
 
 import java.util.Map;
 
-public class OrderMeanSerializer implements Serializer<OrdersMean> {
+public class OrderMeanSerializer implements Serializer<OrdersStatsByIdInRegion> {
 
     private final ObjectMapper objectMapper;
 
@@ -24,7 +24,7 @@ public class OrderMeanSerializer implements Serializer<OrdersMean> {
     }
 
     @Override
-    public byte[] serialize(String topic, OrdersMean data) {
+    public byte[] serialize(String topic, OrdersStatsByIdInRegion data) {
         try {
             if (data == null) {
                 return null;

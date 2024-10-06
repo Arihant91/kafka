@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
-import org.eve.consumer.domain.OrdersMean;
+import org.eve.consumer.domain.OrdersStatsByIdInRegion;
 
 import java.util.Map;
 
-public class OrderMeanDeserializer implements Deserializer<OrdersMean> {
+public class OrderMeanDeserializer implements Deserializer<OrdersStatsByIdInRegion> {
 
     private final ObjectMapper objectMapper;
 
@@ -24,12 +24,12 @@ public class OrderMeanDeserializer implements Deserializer<OrdersMean> {
     }
 
     @Override
-    public OrdersMean deserialize(String topic, byte[] data) {
+    public OrdersStatsByIdInRegion deserialize(String topic, byte[] data) {
         try {
             if (data == null || data.length == 0) {
                 return null;
             }
-            return objectMapper.readValue(data, OrdersMean.class);
+            return objectMapper.readValue(data, OrdersStatsByIdInRegion.class);
         } catch (Exception e) {
             throw new SerializationException("Error deserializing OrdersMean", e);
         }

@@ -1,7 +1,7 @@
 package org.eve.producer.service;
 
 import org.eve.producer.domain.Order;
-import org.eve.producer.domain.OrdersMean;
+import org.eve.producer.domain.OrdersStatsByIdInRegion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -14,10 +14,10 @@ public class KafkaService {
 
     private final KafkaTemplate<String, Order> kafkaTemplateOrder;
 
-    private final KafkaTemplate<String, OrdersMean> kafkaTemplateOrdersMean;
+    private final KafkaTemplate<String, OrdersStatsByIdInRegion> kafkaTemplateOrdersMean;
 
     @Autowired
-    public KafkaService(KafkaTemplate<String, Order> kafkaTemplate, KafkaTemplate<String, OrdersMean> kafkaTemplateOrdersMean) {
+    public KafkaService(KafkaTemplate<String, Order> kafkaTemplate, KafkaTemplate<String, OrdersStatsByIdInRegion> kafkaTemplateOrdersMean) {
 
         this.kafkaTemplateOrder = kafkaTemplate;
         this.kafkaTemplateOrdersMean = kafkaTemplateOrdersMean;
@@ -35,8 +35,8 @@ public class KafkaService {
     });
     }
 
-    public void sendMessage(String topic, String key, OrdersMean value) {
-        final CompletableFuture<SendResult<String, OrdersMean>> future = kafkaTemplateOrdersMean.send(topic, key, value);
+    public void sendMessage(String topic, String key, OrdersStatsByIdInRegion value) {
+        final CompletableFuture<SendResult<String, OrdersStatsByIdInRegion>> future = kafkaTemplateOrdersMean.send(topic, key, value);
 
         future.whenComplete((metadata, exception) -> {
             if (exception != null) {

@@ -4,8 +4,8 @@ spring:
 
   data:
     cassandra:
-      name: localhost
+      contact-points: 192.168.68.53
       port: 9042
-      keyspace-name: Orders
+      keyspace-name: orders
       username: cassandra
       password: cassandra

@@ -11,17 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
 public class EveService {
 
-    private static final Logger fileLogger = LoggerFactory.getLogger("FILE_LOGGER");
     private final EveClient eveClient;
 
     private final RateLimiterService rateLimiterService;
@@ -76,12 +72,10 @@ public class EveService {
         int currentPage = 1;
 
         ResponseEntity<List<Order>> ordersResp = eveClient.getMarketOrdersByRegion(regionId, typeId, currentPage);
-        List<Order> orders = new ArrayList<>(Objects.requireNonNull(ordersResp.getBody()));
+        List<Order> orders = new CopyOnWriteArrayList<>(Objects.requireNonNull(ordersResp.getBody()));
         rateLimiterService.checkRateLimit(ordersResp.getHeaders());
         int totalPages = extractTotalPages(ordersResp.getHeaders());
-        if(orders.isEmpty()){
-            fileLogger.info("regionId: {}, typeId: {}, ordersResp: {}", regionId, typeId, ordersResp);
-        }
+
         List<CompletableFuture<List<Order>>> futures = IntStream.rangeClosed(2, totalPages)
                 .mapToObj(page -> CompletableFuture.supplyAsync(() -> {
                     rateLimiterService.checkRateLimit(ordersResp.getHeaders());

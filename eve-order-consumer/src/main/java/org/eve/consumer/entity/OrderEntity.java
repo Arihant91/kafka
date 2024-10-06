@@ -44,6 +44,7 @@ public record OrderEntity(
         @Column("price")
         BigDecimal price,
 
+
         @Column("range")
         String range,
 
