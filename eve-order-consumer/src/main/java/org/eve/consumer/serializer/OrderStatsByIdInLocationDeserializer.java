@@ -1,19 +1,19 @@
-package org.eve.producer.serializer;
+package org.eve.consumer.serializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.kafka.common.errors.SerializationException;
-import org.apache.kafka.common.serialization.Serializer;
-import org.eve.producer.domain.OrdersStatsByIdInRegion;
+import org.apache.kafka.common.serialization.Deserializer;
+import org.eve.consumer.domain.OrdersStatsByIdInLocation;
 
 import java.util.Map;
 
-public class OrderMeanSerializer implements Serializer<OrdersStatsByIdInRegion> {
+public class OrderStatsByIdInLocationDeserializer implements Deserializer<OrdersStatsByIdInLocation> {
 
     private final ObjectMapper objectMapper;
 
-    public OrderMeanSerializer() {
+    public OrderStatsByIdInLocationDeserializer() {
         this.objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
@@ -24,19 +24,19 @@ public class OrderMeanSerializer implements Serializer<OrdersStatsByIdInRegion> 
     }
 
     @Override
-    public byte[] serialize(String topic, OrdersStatsByIdInRegion data) {
+    public OrdersStatsByIdInLocation deserialize(String topic, byte[] data) {
         try {
-            if (data == null) {
+            if (data == null || data.length == 0) {
                 return null;
             }
-            return objectMapper.writeValueAsBytes(data);
+            return objectMapper.readValue(data, OrdersStatsByIdInLocation.class);
         } catch (Exception e) {
-            throw new SerializationException("Error serializing OrdersMean", e);
+            throw new SerializationException("Error deserializing OrdersStatsByIdInLocation", e);
         }
     }
 
     @Override
     public void close() {
+        // No resources to close
     }
-
 }

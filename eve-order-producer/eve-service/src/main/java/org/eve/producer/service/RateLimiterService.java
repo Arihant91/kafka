@@ -26,16 +26,7 @@ public class RateLimiterService {
     private final Condition rateLimitCondition = lock.newCondition();
 
     public void checkRateLimit(HttpHeaders headers) {
-        while (rateLimitExceeded.get()) {
-            try {
-                logger.info("Waiting for rate limit reset");
-                rateLimitCondition.await();
-                Thread.sleep(errorLimitResetTime.get() * 1000L);
-            } catch (InterruptedException e) {
-                logger.error("Thread interrupted while waiting for rate limit reset", e);
-                Thread.currentThread().interrupt();
-            }
-        }
+        isRateLimitExceededBlock();
         lock.lock();
         try {
             String remainingErrorLimitHeader = headers.getFirst("X-ESI-Error-Limit-Remain");
@@ -64,7 +55,6 @@ public class RateLimiterService {
                     }
                 } catch (InterruptedException e) {
                     logger.error("Thread interrupted while sleeping for rate limit reset", e);
-                    Thread.currentThread().interrupt();
                 } finally {
                     rateLimitExceeded.set(false);
                     rateLimitCondition.signalAll();
@@ -75,7 +65,14 @@ public class RateLimiterService {
         }
     }
 
-    public boolean isRateLimitExceeded(){
-        return this.rateLimitExceeded.get();
+    public void isRateLimitExceededBlock(){
+        while (rateLimitExceeded.get()) {
+            try {
+                logger.info("Waiting for rate limit reset");
+                rateLimitCondition.await();
+            } catch (InterruptedException e) {
+                logger.error("Thread interrupted while waiting for rate limit reset", e);
+            }
+        }
     }
 }

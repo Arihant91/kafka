@@ -1,5 +1,6 @@
 package org.eve.consumer.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.ToString;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
@@ -9,14 +10,14 @@ import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-
-@Table("orders_stats_by_region")
+@Table("orders_stats_by_location")
 @ToString
 @Builder
-public class OrdersStatsByIdInRegionEntity {
+public class OrdersStatsByIdInLocationEntity {
 
-    @PrimaryKeyColumn(name = "region_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
+    @PrimaryKeyColumn(name =  "location_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
+    private Long locationId;
+    @Column("region_id")
     private Long regionId;
 
     @PrimaryKeyColumn(name = "type_id", ordinal = 1, type = PrimaryKeyType.CLUSTERED)

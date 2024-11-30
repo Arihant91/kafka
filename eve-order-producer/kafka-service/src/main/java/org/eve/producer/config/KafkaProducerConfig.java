@@ -3,9 +3,13 @@ package org.eve.producer.config;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.eve.producer.domain.Order;
+import org.eve.producer.domain.OrdersStatByIdInLocation;
 import org.eve.producer.domain.OrdersStatsByIdInRegion;
-import org.eve.producer.serializer.OrderMeanSerializer;
+import org.eve.producer.domain.StructuresByRegion;
+import org.eve.producer.serializer.OrderByLocationSerializer;
+import org.eve.producer.serializer.OrderByRegionSerializer;
 import org.eve.producer.serializer.OrderSerializer;
+import org.eve.producer.serializer.StructuresByRegionSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -36,11 +40,22 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<String, OrdersStatsByIdInRegion> producerFactoryOrdersMean() {
+    public ProducerFactory<String, OrdersStatsByIdInRegion> producerFactoryOrdersByRegion() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092,localhost:29092,localhost:39092");
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, OrderMeanSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, OrderByRegionSerializer.class);
+        configProps.put(ProducerConfig.ACKS_CONFIG, "all");
+        configProps.put(ProducerConfig.RETRIES_CONFIG, Integer.MAX_VALUE);
+        configProps.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
+    @Bean
+    public ProducerFactory<String, OrdersStatByIdInLocation> producerFactoryOrdersByLocation() {
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092,localhost:29092,localhost:39092");
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, OrderByLocationSerializer.class);
         configProps.put(ProducerConfig.ACKS_CONFIG, "all");
         configProps.put(ProducerConfig.RETRIES_CONFIG, Integer.MAX_VALUE);
         configProps.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
@@ -48,7 +63,29 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, OrdersStatsByIdInRegion> kafkaTemplateOrdersMean() {
-        return new KafkaTemplate<>(producerFactoryOrdersMean());
+    public ProducerFactory<String, StructuresByRegion> producerFactoryStructuresByRegion() {
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092,localhost:29092,localhost:39092");
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StructuresByRegionSerializer.class);
+        configProps.put(ProducerConfig.ACKS_CONFIG, "all");
+        configProps.put(ProducerConfig.RETRIES_CONFIG, Integer.MAX_VALUE);
+        configProps.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
+
+    @Bean
+    public KafkaTemplate<String, StructuresByRegion> kafkaTemplateStructuresByRegion() {
+        return new KafkaTemplate<>(producerFactoryStructuresByRegion());
+    }
+
+    @Bean
+    public KafkaTemplate<String, OrdersStatsByIdInRegion> kafkaTemplateOrdersStatsInRegion() {
+        return new KafkaTemplate<>(producerFactoryOrdersByRegion());
+    }
+
+    @Bean
+    public KafkaTemplate<String, OrdersStatByIdInLocation> kafkaTemplateOrdersStatsInLocation() {
+        return new KafkaTemplate<>(producerFactoryOrdersByLocation());
     }
 }

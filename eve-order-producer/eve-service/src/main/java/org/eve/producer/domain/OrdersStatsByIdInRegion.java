@@ -23,4 +23,5 @@ public class OrdersStatsByIdInRegion {
     private BigDecimal lowestPrice;
     private Integer orderCount;
     private BigDecimal medianPrice;
+    private BigDecimal stdDeviation;
 }

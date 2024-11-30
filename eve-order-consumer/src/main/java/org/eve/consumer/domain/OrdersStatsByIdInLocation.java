@@ -1,4 +1,4 @@
-package org.eve.producer.domain;
+package org.eve.consumer.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrdersStatByIdInLocation {
-    private Long regionId;
+public class OrdersStatsByIdInLocation {
     private Long locationId;
+    private Long regionId;
     private Long typeId;
     private LocalDateTime timeOfScraping;
     private Boolean isBuyOrders;

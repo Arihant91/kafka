@@ -1,10 +1,10 @@
 package org.eve.producer.service;
 
 
+import org.aspectj.weaver.ast.Or;
 import org.eve.producer.client.EveClient;
 import org.eve.producer.domain.Order;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.eve.producer.domain.Structures;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -22,7 +21,7 @@ public class EveService {
 
     private final RateLimiterService rateLimiterService;
 
-    private final ExecutorService executorService = Executors.newFixedThreadPool(10);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(400);
 
     @Autowired
     public EveService(EveClient eveClient, RateLimiterService rateLimiterService) {
@@ -30,10 +29,37 @@ public class EveService {
         this.rateLimiterService = rateLimiterService;
     }
 
+    public List<Structures> getStructures(List<Integer> ids){
+        return eveClient.getNames(ids).getBody();
+    }
+
     public List<Long> getRegionIds() {
         return eveClient.getRegions();
     }
 
+    public List<Order> getOrdersByRegion(Long regionId){
+        List<Order> ordersList = new ArrayList<>();
+        ResponseEntity<List<Order>> resp = eveClient.getMarketOrdersByRegion(regionId, 1);
+        ordersList.addAll(Objects.requireNonNull(resp.getBody()));
+        rateLimiterService.checkRateLimit(resp.getHeaders());
+        int totalPages = extractTotalPages(resp.getHeaders());
+        List<CompletableFuture<List<Order>>> futures = IntStream.rangeClosed(2, totalPages)
+                .mapToObj(page -> CompletableFuture.supplyAsync(() -> {
+                    rateLimiterService.isRateLimitExceededBlock();
+                    ResponseEntity<List<Order>> response =eveClient.getMarketOrdersByRegion(regionId, page);
+                    rateLimiterService.checkRateLimit(response.getHeaders());
+                    return Objects.requireNonNull(response.getBody());
+                }, executorService)).toList();
+
+        for (CompletableFuture<List<Order>> future : futures) {
+            try {
+                ordersList.addAll(future.get());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        return ordersList;
+    }
     public List<Long> getTypeIdsPage(Integer page) {
         return eveClient.getTypes(page).getBody();
     }
@@ -65,13 +91,13 @@ public class EveService {
     }
 
     public ResponseEntity<List<Order>> getRegionOrdersByPage(Long regionId, Long typeId, Integer page) {
-        return eveClient.getMarketOrdersByRegion(regionId, typeId, page);
+        return eveClient.getMarketOrdersByIdInRegion(regionId, typeId, page);
     }
 
     public List<Order> getAllOrdersInRegionByType(Long regionId, Long typeId) {
         int currentPage = 1;
 
-        ResponseEntity<List<Order>> ordersResp = eveClient.getMarketOrdersByRegion(regionId, typeId, currentPage);
+        ResponseEntity<List<Order>> ordersResp = eveClient.getMarketOrdersByIdInRegion(regionId, typeId, currentPage);
         List<Order> orders = new CopyOnWriteArrayList<>(Objects.requireNonNull(ordersResp.getBody()));
         rateLimiterService.checkRateLimit(ordersResp.getHeaders());
         int totalPages = extractTotalPages(ordersResp.getHeaders());
@@ -79,7 +105,7 @@ public class EveService {
         List<CompletableFuture<List<Order>>> futures = IntStream.rangeClosed(2, totalPages)
                 .mapToObj(page -> CompletableFuture.supplyAsync(() -> {
                     rateLimiterService.checkRateLimit(ordersResp.getHeaders());
-                    ResponseEntity<List<Order>> pageResp = eveClient.getMarketOrdersByRegion(regionId, typeId, page);
+                    ResponseEntity<List<Order>> pageResp = eveClient.getMarketOrdersByIdInRegion(regionId, typeId, page);
                     return Objects.requireNonNull(pageResp.getBody());
                 }, executorService))
                 .toList();

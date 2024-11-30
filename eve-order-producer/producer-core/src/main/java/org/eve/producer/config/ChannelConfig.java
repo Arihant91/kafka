@@ -13,19 +13,20 @@ public class ChannelConfig {
         return new DirectChannel();
     }
 
+
     @Bean
-    public MessageChannel getOrdersChannel() {
+    public MessageChannel sendSortedOrdersByRegionChannel() {
         return new DirectChannel();
     }
 
     @Bean
-    public MessageChannel sendOrdersToKafkaChannel() {
+    public MessageChannel sendSortedOrdersByLocationChannel() {
         return new DirectChannel();
     }
 
     @Bean
-    public MessageChannel sendProcessedOrdersToKafkaChannel() {
-        return new DirectChannel();
-    }
+    public MessageChannel processStructuresByRegionChannel() { return new DirectChannel();}
+    @Bean
+    public MessageChannel sendStructuresByRegionChannel() { return new DirectChannel();}
 
 }

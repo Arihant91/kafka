@@ -12,6 +12,7 @@ eve:
     getRegions: /universe/regions/
     getTypes: /universe/types/
     getRelevantTypes: /markets/{regionId}/types/
+    getNames: /universe/names/
 
 mongodb:
   url: mongodb://localhost:27017
