@@ -4,54 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dcb56cf8-5598-4fda-abc2-2202e1b362aa" name="Changes" comment="rate services shit getting 42 constantly">
-      <change afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/domain/OrdersStatsByIdInLocation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/domain/Structures.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/domain/StructuresByRegion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/entity/OrdersStatsByIdInLocationEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/entity/StructuresByRegionEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/repository/OrderStatsByIdInLocationEntityRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/repository/StructuresByRegionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/serializer/OrderStatsByIdInLocationDeserializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/serializer/StructureByRegionDeserializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-producer/eve-service/src/main/java/org/eve/producer/domain/Structures.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-producer/eve-service/src/main/java/org/eve/producer/domain/StructuresByRegion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-producer/kafka-service/src/main/java/org/eve/producer/serializer/OrderByLocationSerializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-producer/kafka-service/src/main/java/org/eve/producer/serializer/StructuresByRegionSerializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/domain/RegionIdWithOrders.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/subscriber/ProcessStructuresByRegion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/subscriber/SendToKafkaOrdersStatsByIdInRegion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/subscriber/SendToKafkaStructuresByRegion.java" afterDir="false" />
+    <list default="true" id="dcb56cf8-5598-4fda-abc2-2202e1b362aa" name="Changes" comment="push changes before i fuck up">
+      <change afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/docker/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/docker/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cassandra.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cassandra.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/config/CassandraConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/config/CassandraConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/config/KafkaConsumerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/config/KafkaConsumerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/domain/OrdersStatsByIdInRegion.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/domain/OrdersStatsByIdInRegion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/entity/OrdersStatsByIdInRegionEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/entity/OrdersStatsByIdInRegionEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/repository/OrdersStatsByIdInRegionEntityRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/repository/OrdersStatsByIdInRegionEntityRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/serializer/OrderMeanDeserializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/serializer/OrderStatsByIdInRegionDeserializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/service/KafkaConsumerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/service/KafkaConsumerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eve-order-consumer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-consumer/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eve-order-consumer/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/eve-service/src/main/java/org/eve/producer/client/EveClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/eve-service/src/main/java/org/eve/producer/client/EveClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/eve-service/src/main/java/org/eve/producer/domain/OrdersStatByIdInLocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/eve-service/src/main/java/org/eve/producer/domain/OrdersStatByIdInLocation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/eve-service/src/main/java/org/eve/producer/domain/OrdersStatsByIdInRegion.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/eve-service/src/main/java/org/eve/producer/domain/OrdersStatsByIdInRegion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/eve-service/src/main/java/org/eve/producer/service/EveService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/eve-service/src/main/java/org/eve/producer/service/EveService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/eve-service/src/main/java/org/eve/producer/service/RateLimiterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/eve-service/src/main/java/org/eve/producer/service/RateLimiterService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eve-order-producer/kafka-service/src/main/java/org/eve/producer/config/KafkaProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/kafka-service/src/main/java/org/eve/producer/config/KafkaProducerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/kafka-service/src/main/java/org/eve/producer/serializer/OrderMeanSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/kafka-service/src/main/java/org/eve/producer/serializer/OrderByRegionSerializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/kafka-service/src/main/java/org/eve/producer/service/KafkaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/kafka-service/src/main/java/org/eve/producer/service/KafkaService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/config/ChannelConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/config/ChannelConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/config/IntegrationFlowConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/config/IntegrationFlowConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/domain/Ids.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/service/OrdersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/service/OrdersService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/subscriber/GetOrdersSubscriber.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eve-order-producer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eve-order-producer/producer-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/producer-core/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/subscriber/ProcessOrdersSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/subscriber/ProcessOrdersSubscriber.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/subscriber/SendProcessedOrdersToKafkaSubscriber.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/subscriber/SendToKafkaSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/subscriber/SendToKafkaOrdersStatsByLocation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/populate.cql" beforeDir="false" afterPath="$PROJECT_DIR$/populate.cql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,6 +42,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
+  <component name="MavenRunner">
+    <option name="jreName" value="openjdk-21" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -92,15 +61,17 @@
     &quot;git-widget-placeholder&quot;: &quot;refactor&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Workspace/kafka&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Workspace/kafka/eve-order-producer/producer-core/src/main&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.runner&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Workspace\kafka\eve-order-producer\producer-core\src\main" />
+      <recent name="C:\Workspace\kafka\eve-order-consumer\src\main" />
       <recent name="C:\Workspace\kafka" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -122,7 +93,7 @@
       <recentPaths value="$PROJECT_DIR$/eve-order-producer/producer-core" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.org.eve.consumer.ConsumerCoreApplication">
+  <component name="RunManager" selected="Docker.docker-compose.yml: Compose Deployment">
     <configuration name="CoreServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.eve.producer.CoreServiceApplication" />
       <module name="producer-core" />
@@ -210,10 +181,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.org.eve.consumer.ConsumerCoreApplication" />
-        <item itemvalue="Application.ProducerCoreApplication" />
-        <item itemvalue="Application.CoreServiceApplication" />
         <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+        <item itemvalue="Application.ProducerCoreApplication" />
+        <item itemvalue="Application.org.eve.consumer.ConsumerCoreApplication" />
+        <item itemvalue="Application.CoreServiceApplication" />
         <item itemvalue="Docker.docker-compose.yml.cassandra-db: Compose Deployment" />
       </list>
     </recent_temporary>
@@ -243,7 +214,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728216280905</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="push changes before i fuck up">
+      <option name="closed" value="true" />
+      <created>1732993551077</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1732993551078</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -272,7 +251,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="push" />
     <MESSAGE value="rate services shit getting 42 constantly" />
-    <option name="LAST_COMMIT_MESSAGE" value="rate services shit getting 42 constantly" />
+    <MESSAGE value="push changes before i fuck up" />
+    <option name="LAST_COMMIT_MESSAGE" value="push changes before i fuck up" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -291,11 +271,6 @@
           <url>file://$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/subscriber/SendToKafkaStructuresByRegion.java</url>
           <line>18</line>
           <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/eve-order-producer/eve-service/src/main/java/org/eve/producer/service/EveService.java</url>
-          <line>32</line>
-          <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/eve-order-consumer/src/main/java/org/eve/consumer/service/KafkaConsumerService.java</url>

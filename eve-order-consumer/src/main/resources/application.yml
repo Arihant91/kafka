@@ -1,11 +1,13 @@
 spring:
   kafka:
-    bootstrap-servers: localhost:29092
+#    bootstrap-servers: localhost:29092
+    bootstrap-servers: kafka-broker-1:9092
 
   data:
     cassandra:
 #      contact-points: 192.168.68.53
-      contact-points: localhost
+      #      contact-points: localhost
+      contact-points: cassandra-db
       port: 9042
       keyspace-name: orders
       username: cassandra

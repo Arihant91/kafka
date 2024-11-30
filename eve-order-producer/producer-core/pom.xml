@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>producer-core</artifactId>
+    <version>latest</version>
     <dependencies>
         <dependency>
             <groupId>org.eve.producer</groupId>
@@ -49,12 +50,58 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <source>19</source>
-                    <target>19</target>
+                    <mainClass>org.eve.producer.ProducerCoreApplication</mainClass>
+                    <layout>JAR</layout>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target</outputDirectory>;
+                            <resources>
+                                <resource>
+                                    <directory>src/main/docker</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>prepare-package</id>
+                        <phase>package</phase>
+                        <inherited>false</inherited>
+                        <configuration>
+                            <target>
+                                <exec executable="docker">
+                                    <arg value="build"/>
+                                    <arg value="-t"/>
+                                    <arg value="eve-order-producer:${project.version}"/>
+                                    <arg value="target"/>;
+                                </exec>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

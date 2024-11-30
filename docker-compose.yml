@@ -1,5 +1,23 @@
 version: '3'
 services:
+  cassandra-db:
+    container_name: cassandra
+    image: cassandra:5.0
+    ports:
+      - "9042:9042"
+      - "7000:7000"
+    volumes:
+      - ./data:/var/lib/cassandra
+      - ./cassandra.yaml:/etc/cassandra/cassandra.yaml
+    networks:
+      - cassandra-network
+
+  mongo-db:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     container_name: zookeeper
@@ -8,6 +26,8 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - "2181:2181"
+    networks:
+      - kafka-network
 
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
@@ -18,6 +38,8 @@ services:
       - kafka-broker-3
     ports:
       - "8081:8081"
+    networks:
+      - kafka-network
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
@@ -30,6 +52,8 @@ services:
     hostname: kafka-broker-1
     ports:
       - "19092:19092"
+    networks:
+      - kafka-network
     depends_on:
       - zookeeper
     environment:
@@ -43,6 +67,8 @@ services:
     hostname: kafka-broker-2
     ports:
       - "29092:29092"
+    networks:
+      - kafka-network
     depends_on:
       - zookeeper
     environment:
@@ -73,15 +99,31 @@ services:
       - kafka-broker-3
     ports:
       - "9000:9000"
+    networks:
+      - kafka-network
     environment:
       KAFKA_BROKERCONNECT: kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092
 
-  cassandra-db:
-    container_name: cassandra
-    image: cassandra:5.0
-    ports:
-      - "9042:9042"
-      - "7000:7000"
-    volumes:
-      - ./data:/var/lib/cassandra
-      - ./cassandra.yaml:/etc/cassandra/cassandra.yaml
+  eve-order-producer:
+    image: eve-order-producer
+    depends_on:
+      - kafka-broker-1
+      - kafka-broker-2
+      - kafka-broker-3
+    networks:
+      - kafka-network
+  eve-order-consumer:
+    image: eve-order-consumer
+    depends_on:
+      - kafka-broker-1
+      - kafka-broker-2
+      - kafka-broker-3
+    networks:
+      - kafka-network
+      - cassandra-network
+
+networks:
+  kafka-network:
+    driver: bridge
+  cassandra-network:
+    driver: bridge

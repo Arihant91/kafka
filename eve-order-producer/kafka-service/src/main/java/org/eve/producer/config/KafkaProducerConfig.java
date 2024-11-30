@@ -22,10 +22,12 @@ import java.util.Map;
 @Configuration
 public class KafkaProducerConfig {
 
+    public static final String KAFKA_SERVERS = "kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092";
+
     @Bean
     public ProducerFactory<String, Order> producerFactoryOrder() {
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092,localhost:29092,localhost:39092");
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVERS);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, OrderSerializer.class);
         configProps.put(ProducerConfig.ACKS_CONFIG, "all");
@@ -42,7 +44,7 @@ public class KafkaProducerConfig {
     @Bean
     public ProducerFactory<String, OrdersStatsByIdInRegion> producerFactoryOrdersByRegion() {
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092,localhost:29092,localhost:39092");
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVERS);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, OrderByRegionSerializer.class);
         configProps.put(ProducerConfig.ACKS_CONFIG, "all");
@@ -53,7 +55,7 @@ public class KafkaProducerConfig {
     @Bean
     public ProducerFactory<String, OrdersStatByIdInLocation> producerFactoryOrdersByLocation() {
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092,localhost:29092,localhost:39092");
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVERS);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, OrderByLocationSerializer.class);
         configProps.put(ProducerConfig.ACKS_CONFIG, "all");
@@ -65,7 +67,7 @@ public class KafkaProducerConfig {
     @Bean
     public ProducerFactory<String, StructuresByRegion> producerFactoryStructuresByRegion() {
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092,localhost:29092,localhost:39092");
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVERS);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StructuresByRegionSerializer.class);
         configProps.put(ProducerConfig.ACKS_CONFIG, "all");

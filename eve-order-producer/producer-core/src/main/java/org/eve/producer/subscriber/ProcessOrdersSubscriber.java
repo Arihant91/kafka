@@ -80,11 +80,11 @@ public class ProcessOrdersSubscriber {
     private OrdersStatByIdInLocation getOrdersStatsByIdInLocation(List<Order> orders){
         return OrdersStatByIdInLocation
                 .builder()
-                .regionId(orders.getFirst().getRegionId())
-                .locationId(orders.getFirst().getLocationId())
-                .typeId(orders.getFirst().getTypeId())
+                .regionId(orders.get(0).getRegionId())
+                .locationId(orders.get(0).getLocationId())
+                .typeId(orders.get(0).getTypeId())
                 .timeOfScraping(LocalDateTime.now())
-                .isBuyOrders(orders.getFirst().getIsBuyOrder())
+                .isBuyOrders(orders.get(0).getIsBuyOrder())
                 .avgPrice(getAvgPrice(orders))
                 .volumeRemain(getSumVolume(orders))
                 .highestPrice(getMaxPrice(orders))
