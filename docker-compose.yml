@@ -11,6 +11,11 @@ services:
       - ./cassandra.yaml:/etc/cassandra/cassandra.yaml
     networks:
       - cassandra-network
+    healthcheck:
+      test: [ "CMD", "cqlsh", "-e", "DESCRIBE KEYSPACES" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   mongo-db:
     image: mongo
@@ -24,18 +29,30 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+      KAFKA_OPTS: "-Dzookeeper.4lw.commands.whitelist=*"
     ports:
       - "2181:2181"
     networks:
       - kafka-network
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "2181" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   schema-registry:
+    restart: always
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
-    depends_on:
-      - kafka-broker-1
-      - kafka-broker-2
-      - kafka-broker-3
+    depends_on  :
+      zookeeper:
+        condition: service_healthy
+      kafka-broker-1:
+        condition: service_healthy
+      kafka-broker-2:
+        condition: service_healthy
+      kafka-broker-3:
+        condition: service_healthy
     ports:
       - "8081:8081"
     networks:
@@ -50,12 +67,14 @@ services:
   kafka-broker-1:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-broker-1
+    restart: always
     ports:
       - "19092:19092"
     networks:
       - kafka-network
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
@@ -65,12 +84,14 @@ services:
   kafka-broker-2:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-broker-2
+    restart: always
     ports:
       - "29092:29092"
     networks:
       - kafka-network
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     environment:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
@@ -80,10 +101,12 @@ services:
   kafka-broker-3:
     image: confluentinc/cp-kafka:latest
     hostname: kafka-broker-3
+    restart: always
     ports:
       - "39092:39092"
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     environment:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
@@ -105,19 +128,22 @@ services:
       KAFKA_BROKERCONNECT: kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092
 
   eve-order-producer:
-    image: eve-order-producer
+    restart: always
+    image: nsanyi91569/eve-order-producer
     depends_on:
-      - kafka-broker-1
-      - kafka-broker-2
-      - kafka-broker-3
+        - kafka-broker-1
+        - kafka-broker-2
+        - kafka-broker-3
     networks:
       - kafka-network
   eve-order-consumer:
-    image: eve-order-consumer
+    restart: always
+    image: nsanyi91569/eve-order-consumer
     depends_on:
       - kafka-broker-1
       - kafka-broker-2
       - kafka-broker-3
+      - cassandra-db
     networks:
       - kafka-network
       - cassandra-network

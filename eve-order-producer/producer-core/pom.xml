@@ -92,7 +92,7 @@
                                 <exec executable="docker">
                                     <arg value="build"/>
                                     <arg value="-t"/>
-                                    <arg value="eve-order-producer:${project.version}"/>
+                                    <arg value="nsanyi91569/eve-order-producer:${project.version}"/>
                                     <arg value="target"/>;
                                 </exec>
                             </target>

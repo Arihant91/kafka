@@ -4,20 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dcb56cf8-5598-4fda-abc2-2202e1b362aa" name="Changes" comment="push changes before i fuck up">
-      <change afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/docker/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/docker/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="dcb56cf8-5598-4fda-abc2-2202e1b362aa" name="Changes" comment="might have fucked up">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cassandra.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cassandra.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eve-order-consumer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-consumer/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-consumer/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-consumer/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/kafka-service/src/main/java/org/eve/producer/config/KafkaProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/kafka-service/src/main/java/org/eve/producer/config/KafkaProducerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eve-order-producer/producer-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/producer-core/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/subscriber/ProcessOrdersSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/subscriber/ProcessOrdersSubscriber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/populate.cql" beforeDir="false" afterPath="$PROJECT_DIR$/populate.cql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +54,7 @@
     &quot;git-widget-placeholder&quot;: &quot;refactor&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Workspace/kafka/eve-order-producer/producer-core/src/main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Workspace/kafka&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -93,46 +86,7 @@
       <recentPaths value="$PROJECT_DIR$/eve-order-producer/producer-core" />
     </option>
   </component>
-  <component name="RunManager" selected="Docker.docker-compose.yml: Compose Deployment">
-    <configuration name="CoreServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.eve.producer.CoreServiceApplication" />
-      <module name="producer-core" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.eve.producer.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProducerCoreApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.eve.producer.ProducerCoreApplication" />
-      <module name="producer-core" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.eve.producer.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="org.eve.consumer.ConsumerCoreApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.eve.consumer.ConsumerCoreApplication" />
-      <module name="eve-order-consumer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.eve.consumer.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Docker.docker-compose.yml.eve-order-consumer: Compose Deployment">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="kafka" />
       <method v="2">
@@ -179,13 +133,52 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <configuration name="docker-compose.yml.eve-order-consumer: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="eve-order-consumer" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.eve-order-producer: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="eve-order-producer" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.zookeeper: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="zookeeper" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
-        <item itemvalue="Application.ProducerCoreApplication" />
-        <item itemvalue="Application.org.eve.consumer.ConsumerCoreApplication" />
-        <item itemvalue="Application.CoreServiceApplication" />
+        <item itemvalue="Docker.docker-compose.yml.eve-order-consumer: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.eve-order-producer: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml.cassandra-db: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.zookeeper: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -222,7 +215,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732993551078</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="might have fucked up">
+      <option name="closed" value="true" />
+      <created>1733006843842</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1733006843842</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -252,7 +253,8 @@
     <MESSAGE value="push" />
     <MESSAGE value="rate services shit getting 42 constantly" />
     <MESSAGE value="push changes before i fuck up" />
-    <option name="LAST_COMMIT_MESSAGE" value="push changes before i fuck up" />
+    <MESSAGE value="might have fucked up" />
+    <option name="LAST_COMMIT_MESSAGE" value="might have fucked up" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -261,11 +263,6 @@
           <url>file://$PROJECT_DIR$/eve-order-producer/mongo-service/src/main/java/org/eve/producer/service/MongoService.java</url>
           <line>53</line>
           <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/eve-order-producer/eve-service/src/main/java/org/eve/producer/service/RateLimiterService.java</url>
-          <line>71</line>
-          <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/eve-order-producer/producer-core/src/main/java/org/eve/producer/subscriber/SendToKafkaStructuresByRegion.java</url>

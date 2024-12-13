@@ -2,7 +2,7 @@ CREATE KEYSPACE orders
 WITH REPLICATION = {'class':'SimpleStrategy', 'replication_factor':1};
 USE orders;
 
-CREATE TABLE orders_stats_by_region (
+CREATE TABLE  (
     region_id bigint,
     type_id bigint,
     time_of_scraping TIMESTAMP,
@@ -32,6 +32,8 @@ CREATE TABLE orders_stats_by_location (
     volume_remain bigint,
     PRIMARY KEY ((location_id), type_id, time_of_scraping)
 );
+
+CREATE INDEX ON orders_stats_by_location (is_buy_orders);
 
 CREATE TYPE structures (
     id bigint,
